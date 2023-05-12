@@ -2,84 +2,65 @@
 
 本项目是基于**纯静态**的网址导航网站 [webstack.cc](https://github.com/WebStackPage/WebStackPage.github.io) 制作的 [Hugo](https://gohugo.io/) 主题，是一个基于 Hugo 的静态响应式网址导航主题。<br/>
 
-## 主题开源地址
+## Linux 下安装部署
+安装完本 WebStack-Hugo 主题后，将 exampleSite 目录下的文件复制到 hugo 站点根目录，根据需要把 config.toml 的一些信息改成自己的，导航的网址信息可通过 data 目录下 webstack.yml 修改。
 
-- GitHub：[https://github.com/shenweiyan/WebStack-Hugo](https://github.com/shenweiyan/WebStack-Hugo)
-- Gitee：[https://gitee.com/shenweiyan/WebStack-Hugo](https://gitee.com/shenweiyan/WebStack-Hugo)
+具体执行步骤如下：
+```shell
+mkdir /home/shenweiyan/mysite 
+cd /home/shenweiyan/mysite
 
-## 主题演示地址
+# 安装 WebStack-Hugo 主题
+git clone https://github.com/shenweiyan/WebStack-Hugo.git themes/WebStack-Hugo
 
-- [https://bioit.top](https://bioit.top)
-- [https://so.gd.cn](https://so.gd.cn)
+# 将 exampleSite 目录下的文件复制到 hugo 站点根目录
+cd /home/shenweiyan/mysite
+cp -r themes/WebStack-Hugo/exampleSite/* ./
 
-
-## 特色功能
-
-这是 Hugo 版 WebStack 主题。可以借助 Github Pages 或者 Coding 直接托管部署，无需服务器。
-
-总体说一下特点：
-
-- 采用了一直以来最喜欢的 hugo 部署方式，方便高效。
-- 主要的配置信息都集成到了 config.toml，一键完成各种自定义的配置。
-- 导航的各个信息都集成在 data/webstack.yml 文件中，方便后续增删改动。
+# 启动 hugo 站点
+hugo server 
+# 如果你知道你的公网 ip, 如下面的 132.76.230.31, 可以使用下面的方式执行 hugo server
+hugo server --baseUrl=132.76.230.31 --bind=0.0.0.0 
 ```
-- taxonomy: 科研办公
-  icon: fas fa-flask fa-lg
-  list:
-    - term: 生物信息
-      links:
-        - title: NCBI
-          logo: ncbi.jpg
-          url: https://www.ncbi.nlm.nih.gov/
-          description: National Center for Biotechnology Information.
-        - title: Bioconda
-          logo: bioconda.jpg
-          url: https://anaconda.org/bioconda/
-          description: "Bioconda :: Anaconda.org."
-    - term: 云服务器
-      links:
-        - title: 阿里云
-          logo: 阿里云.jpg
-          url: https://www.aliyun.com/
-          description: 上云就上阿里云。
-        - title: 腾讯云
-          logo: 腾讯云.jpg
-          url: https://cloud.tencent.com/
-          description: 产业智变，云启未来。
+
+## 导出 HTML 静态网页至 publishDir
+Windows/Linux 下执行的 hugo server 命令将会通过热加载的方式临时启动一个 Hugo 服务器（Hugo 可以启动一个 Web 服务器，同时构建站点内容到内存中并在检测到文件更改后重新渲染，方便我们在开发环境实时预览对站点所做的更改），这个时候我们打开浏览器 http://127.0.0.1:1313/，就可以看到我们站点的样子了。
+
+如果我们想要把我们的站点部署到 GitHub/Gitee Pages（或者本地的服务器），我们可以：
+
+### 1. 生成静态页面内容
+
+可以通过下面的命令，生成(构建)静态页面内容。
+```shell
+hugo -D 或者 hugo --minify
 ```
-- 做了手机电脑自适应以及夜间模式。
-- 增加了搜索功能，以及下拉的热词选项（基于百度 API）。
-- 增加了一言、和风天气的 API。
+这个命令会默认在public/目录中生成您的网站，当然您可以通过改变站点配置中的publishDir选项来配置这个输出目录。
 
-## 使用说明
+`🏷️Hugo` 小知识 - 草案、未来和过期内容
 
-这是一个开源的公益项目，你可以拿来制作自己的网址导航，也可以做与导航无关的网站。
+Hugo 允许您在网站内容的前言设定中设置文档的draft，publishdate甚至expirydate字段。默认情况下，Hugo 不会发布下面内容：
+1. `publishdate` 发布日期值设定在未来的内容；
+2. `draft:true` 草案状态设置为真的内容；
+3. `expirydate` 过期日期值设置为过去某事件的内容。
 
-WebStack 有非常多的魔改版本，这是其中一个。如果你对本主题进行了一些个性化调整，欢迎来本项目中 issue 分享一下！
+这三个可以在本地开发和部署编译时通过对hugo和hugo server分别添加如下参数来重新设定，或者在配置文件中设定对应(不包含--)域的 boolean 值：
+1. -F, --buildFuture    include content with publishdate in the future
+2. -D, --buildDrafts    include content marked as draft
+3. -E, --buildExpired   include expired content
+
+### 2. 部署站点
+
+把生成的 public/静态内容目录上传到 GitHub，开启 GitHub/Gitee Pages，并且绑定 cname 域名即可。
 
 
-## 安装说明
+## 获取网站图标
 
-关于 Windows/Linux 下详细的安装与使用说明，请参考文档：
+可以使用一为提供的的 Favicon 图标 api：[https://api.iowen.cn/doc/favicon.html](https://api.iowen.cn/doc/favicon.html)。
 
-[WebStack-Hugo | 一个静态响应式导航主题](https://www.yuque.com/shenweiyan/cookbook/webstack-hugo) - [语雀](https://www.yuque.com/shenweiyan)
-
-
-## 感谢
-
-本主题的部分代码参考了以下几个开源项目，特此感谢。
-
-- [WebStackPage/WebStackPage.github.io](https://github.com/WebStackPage/WebStackPage.github.io)
-- [liutongxu/liutongxu.github.io](https://github.com/liutongxu/liutongxu.github.io)
-- [iplaycode/webstack-hugo](https://github.com/iplaycode/webstack-hugo)
-
-感谢以下所有朋友对本主题所做出的贡献。
-
-[@yanbeiyinhanghang](https://github.com/yinhanghang) [@jetsung](https://github.com/jetsung)
-
-## 赞赏
-
-如果你觉得本项目对你有所帮助，欢迎请作者喝杯热咖啡 >.<
-
-![donate-wecaht-aliapy](https://user-images.githubusercontent.com/26101369/212630361-aa393be8-581e-4a97-bfe2-256e883791fb.jpg)
+接口地址：[https://api.iowen.cn/favicon](https://api.iowen.cn/favicon)
+返回格式：图片
+请求方式：get
+请求示例：
+    ■ https://api.iowen.cn/favicon/www.iowen.cn.png
+    ■ https://api.iowen.cn/favicon/www.baidu.com.png
 
