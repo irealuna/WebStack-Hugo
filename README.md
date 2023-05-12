@@ -7,14 +7,13 @@
 
 具体执行步骤如下：
 ```shell
-mkdir /home/shenweiyan/mysite 
-cd /home/shenweiyan/mysite
+mkdir /home/dev/mysite 
+cd /home/dev/mysite
 
 # 安装 WebStack-Hugo 主题
 git clone https://github.com/shenweiyan/WebStack-Hugo.git themes/WebStack-Hugo
 
 # 将 exampleSite 目录下的文件复制到 hugo 站点根目录
-cd /home/shenweiyan/mysite
 cp -r themes/WebStack-Hugo/exampleSite/* ./
 
 # 启动 hugo 站点
